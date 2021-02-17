@@ -1,3 +1,5 @@
+import java.net.URL;
+import java.util.Scanner;
 
 public class Driver 
 {
@@ -10,6 +12,31 @@ public class Driver
 		c1.display();
 		c2.display();
 		c3.display();
+		
+		String cardJson = Driver.getJSON("https://futdb.app/api/doc");
+		System.out.println(cardJson);
 	}
-
+	static String getJSON(String urlString)
+	{
+		String line = "";
+		try
+		{
+			URL url = new URL(urlString);
+			Scanner input = new Scanner(url.openStream());
+			
+			while (input.hasNext())
+			{
+				line += input.nextLine();
+			}
+			
+			input.close();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			line = "can't connect";
+		}
+		return line;
+	}
 }
+
